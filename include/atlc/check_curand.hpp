@@ -7,8 +7,6 @@
 
 namespace atlc {
 
-    #define ATLC_CASE_RETURN(code) case code: return #code
-
     inline static char const* curandGetErrorString(curandStatus_t error) {
         switch (error) {
             ATLC_CASE_RETURN(CURAND_STATUS_SUCCESS);
@@ -24,6 +22,7 @@ namespace atlc {
             ATLC_CASE_RETURN(CURAND_STATUS_INITIALIZATION_FAILED);
             ATLC_CASE_RETURN(CURAND_STATUS_ARCH_MISMATCH);
             ATLC_CASE_RETURN(CURAND_STATUS_INTERNAL_ERROR);
+            default: return NULL;
         }
         return "<unknown>";
     }

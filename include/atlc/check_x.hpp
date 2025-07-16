@@ -8,6 +8,8 @@
 namespace atlc
 {
 
+    #define ATLC_CASE_RETURN(code) case code: return #code
+
     constexpr const char* get_filename_impl(const char* s, const char* last) noexcept
     {
         return (*s == '\0')
