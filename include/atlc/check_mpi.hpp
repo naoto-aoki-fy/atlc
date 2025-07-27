@@ -2,6 +2,7 @@
 
 // #include <mpi.h>
 #include "check_x.hpp"
+#include "format.hpp"
 
 // #if defined(MPI_COMM_WORLD)
 
@@ -16,18 +17,8 @@ namespace atlc {
             std::vector<char> error_string_vector(MPI_MAX_ERROR_STRING);
             int resultlen;
             MPI_Error_string(err, error_string_vector.data(), &resultlen);
-            // fprintf(stderr, "[debug] %s:%d call:%s error:%s\n", filename, lineno, funcname, error_string);
             char const* const error_string = error_string_vector.data();
-
-            std::vector<char> strbuf(1);
-
-            auto printf_lambda = [=](char* strbuf, size_t buf_length){ return snprintf(strbuf, buf_length, "%s:%d:%s error:%s\n", filename, lineno, funcname, error_string); };
-
-            int str_length = printf_lambda(strbuf.data(), strbuf.size());
-            strbuf.resize(str_length + 1);
-            str_length = printf_lambda(strbuf.data(), strbuf.size() + 1);
-
-            throw std::runtime_error(strbuf.data());
+            throw std::runtime_error(atlc::format("%s:%d:%s error:%s\n", filename, lineno, funcname, error_string));
         }
     }
 

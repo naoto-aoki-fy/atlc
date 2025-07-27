@@ -5,6 +5,8 @@
 #include <vector>
 #include <utility>
 
+#include "format.hpp"
+
 namespace atlc
 {
 
@@ -49,15 +51,7 @@ namespace atlc
         auto err = func();
         if (err != 0)
         {
-            std::vector<char> strbuf(1);
-
-            auto printf_lambda = [=](char* strbuf, size_t buf_length){ return snprintf(strbuf, buf_length, "%s:%d:%s error:%d\n", filename, lineno, funcname, err); };
-
-            int str_length = printf_lambda(strbuf.data(), strbuf.size());
-            strbuf.resize(str_length + 1);
-            str_length = printf_lambda(strbuf.data(), strbuf.size() + 1);
-
-            throw std::runtime_error(strbuf.data());
+            throw std::runtime_error(atlc::format("%s:%d:%s error:%d\n", filename, lineno, funcname, err));
         }
         return err;
     }
@@ -73,15 +67,7 @@ namespace atlc
         auto err = func();
         if (err == 0)
         {
-            std::vector<char> strbuf(1);
-
-            auto printf_lambda = [=](char* strbuf, size_t buf_length){ return snprintf(strbuf, buf_length, "%s:%d:%s error:%d\n", filename, lineno, funcname, err); };
-
-            int str_length = printf_lambda(strbuf.data(), strbuf.size());
-            strbuf.resize(str_length + 1);
-            str_length = printf_lambda(strbuf.data(), strbuf.size() + 1);
-
-            throw std::runtime_error(strbuf.data());
+            throw std::runtime_error(atlc::format("%s:%d:%s error:%d\n", filename, lineno, funcname, err));
         }
         return err;
     }
@@ -98,19 +84,10 @@ namespace atlc
         auto err = checker_func(value);
         if (err != 0)
         {
-            std::vector<char> strbuf(1);
-
-            auto printf_lambda = [=](char* strbuf, size_t buf_length){ return snprintf(strbuf, buf_length, "%s:%d:%s error:%d\n", filename, lineno, funcname, err); };
-
-            int str_length = printf_lambda(strbuf.data(), strbuf.size());
-            strbuf.resize(str_length + 1);
-            str_length = printf_lambda(strbuf.data(), strbuf.size() + 1);
-
-            throw std::runtime_error(strbuf.data());
+            throw std::runtime_error(atlc::format("%s:%d:%s error:%d\n", filename, lineno, funcname, err));
         }
         return value;
     }
-
 
     #define ATLC_CHECK_VALUE(checker_code, func, ...) atlc::check_value(get_filename(__FILE__), __LINE__, [&](auto arg)checker_code, #func "(" #__VA_ARGS__ ")", [&](){return func(__VA_ARGS__);})
 
