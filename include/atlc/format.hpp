@@ -20,7 +20,7 @@
 namespace atlc
 {
     __attribute__ ((__format__(printf, 1, 2)))
-    std::string format(const char* fmt, ...)
+    inline std::string format(const char* fmt, ...)
     {
         if (!fmt) return {};
     

@@ -9,7 +9,7 @@
 
 namespace atlc {
 
-    void group_by_hostname(
+    inline void group_by_hostname(
         int const rank,
         int const size,
         std::string& my_hostname,
