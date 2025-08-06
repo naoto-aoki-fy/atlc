@@ -23,22 +23,22 @@ namespace atlc {
 
         bool test(std::size_t pos) const {
             check_range(pos);
-            return (data_[pos / bits_per_byte] >> (pos % bits_per_byte)) & 1U;
+            return (data_[pos / bits_per_byte] >> (pos & (bits_per_byte-1))) & 1U;
         }
 
         // --- modifiers ---------------------------------------------------------
         void set(std::size_t pos, bool value = true) {
             check_range(pos);
             if (value)
-                data_[pos / bits_per_byte] |=  (uint8_t(1) << (pos % bits_per_byte));
+                data_[pos / bits_per_byte] |=  (uint8_t(1) << (pos & (bits_per_byte-1)));
             else
-                data_[pos / bits_per_byte] &= ~(uint8_t(1) << (pos % bits_per_byte));
+                data_[pos / bits_per_byte] &= ~(uint8_t(1) << (pos & (bits_per_byte-1)));
         }
 
         void reset(std::size_t pos)           { set(pos, false); }
         void flip(std::size_t pos) {
             check_range(pos);
-            data_[pos / bits_per_byte] ^= (uint8_t(1) << (pos % bits_per_byte));
+            data_[pos / bits_per_byte] ^= (uint8_t(1) << (pos & (bits_per_byte-1)));
         }
 
         void reset_all() { std::fill(data_.begin(), data_.end(), 0); }
