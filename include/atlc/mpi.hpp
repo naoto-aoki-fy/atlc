@@ -9,14 +9,12 @@
 
 namespace atlc {
 
-    inline void group_by_hostname(
-        int const rank,
-        int const size,
-        std::string& my_hostname,
-        int& my_node_number,
-        int& my_node_local_rank,
-        int& node_count
-    ) {
+    inline void group_by_hostname(int const rank, int const size, std::string* my_hostname_ptr, int* my_node_number_ptr, int* my_node_local_rank_ptr, int* node_count_ptr ) {
+
+        std::string my_hostname;
+        int my_node_number;
+        int my_node_local_rank;
+        int node_count;
 
         // 各プロセスでホスト名を取得
         char hostname[MPI_MAX_PROCESSOR_NAME];
@@ -90,6 +88,14 @@ namespace atlc {
                     &my_node_local_rank, 1, MPI_INT,
                     0, MPI_COMM_WORLD);
 
+        if (my_hostname_ptr) { *my_hostname_ptr = std::move(my_hostname); }
+        if (my_node_number_ptr) { *my_node_number_ptr = my_node_number; }
+        if (my_node_local_rank_ptr) { *my_node_local_rank_ptr = my_node_local_rank; }
+        if (node_count_ptr) { *node_count_ptr = node_count; }
+    }
+
+    inline void group_by_hostname(int const rank, int const size, std::string& my_hostname, int& my_node_number, int& my_node_local_rank, int& node_count) {
+        group_by_hostname(rank, size, &my_hostname, &my_node_number, &my_node_local_rank, &node_count);
     }
 
 }
