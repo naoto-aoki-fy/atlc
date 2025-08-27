@@ -67,7 +67,7 @@ namespace atlc
         auto err = func();
         if (err == 0)
         {
-            throw std::runtime_error(atlc::format("%s:%d:%s error:%d\n", filename, lineno, funcname, err));
+            throw std::runtime_error(atlc::format("%s:%d:%s ret=0\n", filename, lineno, funcname));
         }
         return err;
     }
