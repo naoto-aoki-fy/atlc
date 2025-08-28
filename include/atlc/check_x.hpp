@@ -77,18 +77,17 @@ namespace atlc
     #define ATLC_DEFER_CHECK_NONZERO(func, ...) ATLC_DEFER_CODE({ATLC_CHECK_NONZERO(func, __VA_ARGS__);})
 
 
-    template <typename CheckerFunc, typename Func>
-    auto check_value(char const* const filename, int const lineno, CheckerFunc checker_func, char const* const funcname, Func func) -> decltype(func())
+    template <typename Func>
+    auto check_value(char const* const filename, int const lineno, decltype(std::declval<Func>()()) value_good, char const* const funcname, Func func) -> decltype(func())
     {
-        auto value = func();
-        auto err = checker_func(value);
-        if (err != 0)
+        auto value_returned = func();
+        if (value_returned != value_good)
         {
-            throw std::runtime_error(atlc::format("%s:%d:%s error:%d\n", filename, lineno, funcname, err));
+            throw std::runtime_error(atlc::format("%s:%d:%s\n", filename, lineno, funcname));
         }
-        return value;
+        return value_returned;
     }
 
-    #define ATLC_CHECK_VALUE(checker_code, func, ...) atlc::check_value(get_filename(__FILE__), __LINE__, [&](auto arg)checker_code, #func "(" #__VA_ARGS__ ")", [&](){return func(__VA_ARGS__);})
+    #define ATLC_CHECK_VALUE(value_good, func, ...) atlc::check_value(atlc::get_filename(__FILE__), __LINE__, value_good, #func "(" #__VA_ARGS__ ")", [&](){return func(__VA_ARGS__);})
 
 }
