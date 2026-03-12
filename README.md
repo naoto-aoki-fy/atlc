@@ -24,7 +24,7 @@ and ready to be dropped into existing build systems.
 ```
 include/atlc/    # Library headers
 examples/        # Small, buildable usage samples
-LICENSE          # MIT license
+LICENSE          # License
 README.md        # This file
 ```
 
