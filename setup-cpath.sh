@@ -3,7 +3,7 @@
 # Usage:
 #   source setup-cpath.sh
 
-_atlc_setup_cpath_script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+_atlc_setup_cpath_script_dir="$(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")")"
 _atlc_setup_cpath_include_dir="${_atlc_setup_cpath_script_dir}/include"
 
 case ":${CPATH:-}:" in
