@@ -29,7 +29,13 @@ README.md        # This file
 ```
 
 Because the project is header-only, installation is as simple as adding the
-`include` directory to your compiler's include path.
+`include` directory to your compiler's include path.  You can also source the
+provided helper script to add this repository's absolute `include` path to
+`CPATH` for the current shell:
+
+```bash
+source setup-cpath.sh
+```
 
 ## Getting started
 
