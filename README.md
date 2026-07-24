@@ -112,3 +112,7 @@ source for additional details.
 To run a specific example, build it and execute the generated binary (some
 examples, such as the MPI or CUDA demos, must be run under the corresponding
 runtime environment).
+
+## Acknowledgments
+
+This repository is based on results obtained from a project, JPNP20017, commissioned by the New Energy and Industrial Technology Development Organization (NEDO).
