@@ -112,8 +112,3 @@ source for additional details.
 To run a specific example, build it and execute the generated binary (some
 examples, such as the MPI or CUDA demos, must be run under the corresponding
 runtime environment).
-
-## License
-
-The project is released under the MIT License.  See [`LICENSE`](LICENSE) for the
-full text.
